@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createAccount } from "../services/AccountService";
+import "./CreateAccount.css";
 
 function CreateAccount() {
 
@@ -22,57 +23,66 @@ function CreateAccount() {
 
     createAccount(account)
       .then(() => {
-        alert("Account Created Successfully!");
+        alert("✅ Account Created Successfully!");
+        setAccount({
+          accountNumber: "",
+          holderName: "",
+          email: "",
+          accountType: ""
+        });
       })
-      .catch((error) => {
-        console.error(error);
-        alert("Error creating account");
+      .catch(() => {
+        alert("❌ Error creating account");
       });
   };
 
   return (
-    <div>
-      <h2>Create Account</h2>
+    <div className="container">
+      <div className="card">
+        <h2>🏦 Create Bank Account</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="accountNumber"
-          placeholder="Account Number"
-          onChange={handleChange}
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="accountNumber"
+            placeholder="Account Number"
+            value={account.accountNumber}
+            onChange={handleChange}
+            required
+          />
 
-        <br /><br />
+          <input
+            type="text"
+            name="holderName"
+            placeholder="Holder Name"
+            value={account.holderName}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="text"
-          name="holderName"
-          placeholder="Holder Name"
-          onChange={handleChange}
-        />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={account.email}
+            onChange={handleChange}
+            required
+          />
 
-        <br /><br />
+          <select
+            name="accountType"
+            value={account.accountType}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Account Type</option>
+            <option value="SAVINGS">Savings</option>
+            <option value="CURRENT">Current</option>
+          </select>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="text"
-          name="accountType"
-          placeholder="Account Type"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">Create Account</button>
-      </form>
+          <button type="submit">Create Account</button>
+        </form>
+      </div>
     </div>
   );
 }
